@@ -9,7 +9,7 @@ The minimal usage is as follows:
 ```yaml
 steps:
 steps:
-- uses: browser-actions/public-chrome-extension@latest
+- uses: browser-actions/publish-chrome-extension@latest
   with:
     extension-id: "********************************"
     extension-path: "path/to/your/extension.zip"
