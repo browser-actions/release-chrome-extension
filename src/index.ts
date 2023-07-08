@@ -1,6 +1,6 @@
 import { CWSClient } from "./cws";
 import fs from "fs";
-import core from "@actions/core";
+import * as core from "@actions/core";
 
 async function run(): Promise<void> {
   const clientId = core.getInput("oauth-client-id");
