@@ -1,4 +1,4 @@
-# publish-chrome-extension
+# release-chrome-extension
 
 This is a GitHub Action to publish a Chrome extension to the Chrome Web Store.
 
@@ -9,7 +9,7 @@ The minimal usage is as follows:
 ```yaml
 steps:
 steps:
-- uses: browser-actions/public-chrome-extension@latest
+- uses: browser-actions/release-chrome-extension@latest
   with:
     extension-id: "********************************"
     extension-path: "path/to/your/extension.zip"
