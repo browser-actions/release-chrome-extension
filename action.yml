@@ -1,4 +1,4 @@
-name: 'Publish Chrome Extension'
+name: 'Release Chrome Extension'
 description: 'Publish a chrome extension in the Chrome Web Store'
 author: "Shin'ya Ueoka"
 
