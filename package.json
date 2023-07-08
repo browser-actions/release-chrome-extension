@@ -1,6 +1,6 @@
 {
   "name": "publish-chrome-addon",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Publish a chrome extension in the Chrome Web Store ",
   "main": "index.js",
   "repository": "git@github.com:browser-actions/publish-chrome-extension.git",
