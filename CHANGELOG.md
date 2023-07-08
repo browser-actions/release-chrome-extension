@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0](https://github.com/browser-actions/release-chrome-extension/compare/release-chrome-extension-v0.1.1...release-chrome-extension-v0.1.2) (2023-07-08)
+## [0.1.2](https://github.com/browser-actions/release-chrome-extension/compare/release-chrome-extension-v0.1.1...release-chrome-extension-v0.1.2) (2023-07-08)
 
 
 ### Bug Fixes
