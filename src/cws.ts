@@ -1,7 +1,7 @@
-import fetch from "node-fetch";
+import type { ReadStream } from "node:fs";
 import { google } from "googleapis";
-import { BodyInit } from "node-fetch";
-import { ReadStream } from "fs";
+import fetch from "node-fetch";
+import type { BodyInit } from "node-fetch";
 
 type UploadState = "FAILURE" | "IN_PROGRESS" | "NOT_FOUND" | "SUCCESS";
 
@@ -56,11 +56,11 @@ export class CWSClient {
 
   async getItem(
     extensionId: string,
-    projection: "DRAFT"
+    projection: "DRAFT",
   ): Promise<ItemReponse> {
     return this.proceed<ItemReponse>(
       "GET",
-      `/chromewebstore/v1.1/items/${extensionId}?projection=${projection}`
+      `/chromewebstore/v1.1/items/${extensionId}?projection=${projection}`,
     );
   }
 
@@ -68,21 +68,21 @@ export class CWSClient {
     return this.proceed<ItemReponse>(
       "PUT",
       `/upload/chromewebstore/v1.1/items/${extensionId}`,
-      zip
+      zip,
     );
   }
 
   async publishItem(extensionId: string): Promise<PublishResponse> {
     return this.proceed<PublishResponse>(
       "POST",
-      `/chromewebstore/v1.1/items/${extensionId}/publish`
+      `/chromewebstore/v1.1/items/${extensionId}/publish`,
     );
   }
 
   private async proceed<T>(
     method: string,
     path: string,
-    body?: BodyInit
+    body?: BodyInit,
   ): Promise<T> {
     await this.getAccessToken();
 
@@ -97,7 +97,7 @@ export class CWSClient {
       throw new Error(
         `Failed to ${method} ${url}: ${resp.status} ${
           resp.statusText
-        } ${await resp.text()}`
+        } ${await resp.text()}`,
       );
     }
 
@@ -111,7 +111,7 @@ export class CWSClient {
 
     const oauth2Client = new google.auth.OAuth2(
       this.clientId,
-      this.clientSecret
+      this.clientSecret,
     );
     oauth2Client.setCredentials({ refresh_token: this.refreshToken });
 
