@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/browser-actions/release-chrome-extension/compare/release-chrome-extension-v0.1.2...release-chrome-extension-v0.2.0) (2024-07-23)
+
+
+### Features
+
+* bump runtime node version ([#9](https://github.com/browser-actions/release-chrome-extension/issues/9)) ([69c9524](https://github.com/browser-actions/release-chrome-extension/commit/69c95245a1f86471f106e4bec3da6ec24d173d93))
+
+
+### Bug Fixes
+
+* sign published tags and commits ([#8](https://github.com/browser-actions/release-chrome-extension/issues/8)) ([81797a5](https://github.com/browser-actions/release-chrome-extension/commit/81797a50b45b7b1308b1445000f582e72f4585d1))
+
 ## [0.1.2](https://github.com/browser-actions/release-chrome-extension/compare/release-chrome-extension-v0.1.1...release-chrome-extension-v0.1.2) (2023-07-08)
 
 
