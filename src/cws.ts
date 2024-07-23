@@ -1,7 +1,5 @@
 import type { ReadStream } from "node:fs";
 import { google } from "googleapis";
-import fetch from "node-fetch";
-import type { BodyInit } from "node-fetch";
 
 type UploadState = "FAILURE" | "IN_PROGRESS" | "NOT_FOUND" | "SUCCESS";
 
@@ -82,7 +80,7 @@ export class CWSClient {
   private async proceed<T>(
     method: string,
     path: string,
-    body?: BodyInit,
+    body?: ReadStream,
   ): Promise<T> {
     await this.getAccessToken();
 
