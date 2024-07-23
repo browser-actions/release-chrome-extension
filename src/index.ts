@@ -1,6 +1,6 @@
-import { CWSClient } from "./cws";
-import fs from "fs";
+import fs from "node:fs";
 import * as core from "@actions/core";
+import { CWSClient } from "./cws";
 
 async function run(): Promise<void> {
   const clientId = core.getInput("oauth-client-id");
@@ -19,8 +19,8 @@ async function run(): Promise<void> {
   ) {
     throw new Error(
       `Failed to upload: ${uploadResult.uploadState} ${JSON.stringify(
-        uploadResult.itemError
-      )}`
+        uploadResult.itemError,
+      )}`,
     );
   }
 

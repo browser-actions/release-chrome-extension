@@ -1,7 +1,7 @@
-import open from "open";
-import readline from "readline";
+import http from "node:http";
+import readline from "node:readline";
 import { google } from "googleapis";
-import http from "http";
+import open from "open";
 
 const prompt = async (msg) => {
   console.log(msg);
@@ -28,7 +28,7 @@ async function run() {
   const oauth2 = new google.auth.OAuth2(
     clientId,
     clientSecret,
-    OAUTH_REDIRECT_URI
+    OAUTH_REDIRECT_URI,
   );
 
   const url = oauth2.generateAuthUrl({
