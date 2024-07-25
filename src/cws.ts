@@ -1,4 +1,3 @@
-import type { ReadStream } from "node:fs";
 import { google } from "googleapis";
 
 type UploadState = "FAILURE" | "IN_PROGRESS" | "NOT_FOUND" | "SUCCESS";
@@ -62,7 +61,7 @@ export class CWSClient {
     );
   }
 
-  async updateItem(extensionId: string, zip: ReadStream): Promise<ItemReponse> {
+  async updateItem(extensionId: string, zip: Blob): Promise<ItemReponse> {
     return this.proceed<ItemReponse>(
       "PUT",
       `/upload/chromewebstore/v1.1/items/${extensionId}`,
@@ -80,7 +79,7 @@ export class CWSClient {
   private async proceed<T>(
     method: string,
     path: string,
-    body?: ReadStream,
+    body?: Blob,
   ): Promise<T> {
     await this.getAccessToken();
 

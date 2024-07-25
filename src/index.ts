@@ -11,7 +11,7 @@ async function run(): Promise<void> {
 
   const c = new CWSClient({ clientId, clientSecret, refreshToken });
 
-  const zip = fs.createReadStream(extensionPath);
+  const zip = await fs.openAsBlob(extensionPath);
   const uploadResult = await c.updateItem(extensionId, zip);
   if (
     uploadResult.uploadState !== "SUCCESS" &&
