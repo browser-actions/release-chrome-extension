@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/browser-actions/release-chrome-extension/compare/release-chrome-extension-v0.2.1...release-chrome-extension-v0.2.2) (2026-05-06)
+
+
+### Bug Fixes
+
+* update Node.js runtime to v24 LTS ([#17](https://github.com/browser-actions/release-chrome-extension/issues/17)) ([8f81ce6](https://github.com/browser-actions/release-chrome-extension/commit/8f81ce65b15a0466c73d8da323d20d6941d8ce24))
+
 ## [0.2.1](https://github.com/browser-actions/release-chrome-extension/compare/release-chrome-extension-v0.2.0...release-chrome-extension-v0.2.1) (2024-07-25)
 
 
