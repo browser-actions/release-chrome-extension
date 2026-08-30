@@ -1,8 +1,11 @@
 import fs from "node:fs";
-import * as core from "@actions/core";
 import { CWSClient } from "./cws";
 
 async function run(): Promise<void> {
+  // @actions/core is ESM-only (since v3), and this project's build output
+  // must stay CommonJS, so it's imported dynamically here.
+  const core = await import("@actions/core");
+
   try {
     const clientId = core.getInput("oauth-client-id");
     const clientSecret = core.getInput("oauth-client-secret");
