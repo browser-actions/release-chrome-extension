@@ -45,6 +45,16 @@ The action flow is:
 
 `cws.ts` wraps the Google APIs client (`googleapis`) for the Chrome Web Store. OAuth2 tokens are constructed from the provided client ID, client secret, and refresh token.
 
+### Build output is ESM
+
+`package.json` has `"type": "module"` and `tsconfig.json` targets
+`module: "ESNext"` / `moduleResolution: "Bundler"`, so `@actions/core`
+(ESM-only since v3) can be imported statically in `src/index.ts`. `ncc`
+compiles the bundle as ESM and emits a `dist/package.json` containing
+`{"type": "module"}` alongside `dist/index.js`, so the packaged action
+runs correctly under Node regardless of any consumer's own
+`package.json`.
+
 ### Getting OAuth2 credentials locally
 
 Use the included mock OAuth2 app to obtain a refresh token without a real OAuth2 client:
@@ -89,7 +99,7 @@ node dist/index.js
 ## Conventions
 
 - **TypeScript strict mode** — all types must be explicit; avoid `any`.
-- **Linter:** Biome — run `pnpm lint` before committing. `useLiteralKeys` and `noUselessElse` rules are disabled.
+- **Linter:** Biome — run `pnpm lint` before committing. Uses the `recommended` rules preset (no rule-specific overrides).
 - **Formatter:** Biome with space indentation.
 - **Node.js ≥ 24** is required.
 - **Conventional Commits** are required for all commits (`feat:`, `fix:`, `chore:`, etc.).
