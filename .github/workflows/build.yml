@@ -23,3 +23,35 @@ jobs:
         with:
           name: dist
           path: ./dist/
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: 'package.json'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - run: npm run package
+      - name: Start mock API server
+        run: |
+          node test/mock-server.mjs &
+          for i in $(seq 1 20); do
+            curl -sf http://127.0.0.1:8787/healthz && break
+            sleep 0.5
+          done
+      - name: Create dummy extension fixture
+        run: printf 'dummy extension zip contents' > "${RUNNER_TEMP}/extension.zip"
+      - name: Run packaged action (e2e)
+        uses: ./dist
+        with:
+          extension-id: abcdefghijklmnopabcdefghijklmnop
+          extension-path: ${{ runner.temp }}/extension.zip
+          oauth-client-id: mock-client-id
+          oauth-client-secret: mock-client-secret
+          oauth-refresh-token: mock-refresh-token
+        env:
+          CWS_API_ORIGIN: http://127.0.0.1:8787
+          GOOGLE_API_ORIGIN: http://127.0.0.1:8787
