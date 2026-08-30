@@ -29,11 +29,14 @@ type PublishResponse = {
 };
 
 const ORIGIN = "https://www.googleapis.com";
+const GOOGLE_API_ORIGIN = "https://oauth2.googleapis.com";
 
 export class CWSClient {
   private readonly clientId: string;
   private readonly clientSecret: string;
   private readonly refreshToken: string;
+  private readonly apiOrigin: string;
+  private readonly googleApiOrigin: string;
 
   private accessToken: string | null = null;
 
@@ -41,14 +44,23 @@ export class CWSClient {
     clientId,
     clientSecret,
     refreshToken,
+    apiOrigin = ORIGIN,
+    googleApiOrigin = GOOGLE_API_ORIGIN,
   }: {
     clientId: string;
     clientSecret: string;
     refreshToken: string;
+    // Overridable for testing against a local mock server instead of the
+    // real Chrome Web Store API / Google OAuth2 token endpoint. Never set
+    // by the published action itself.
+    apiOrigin?: string;
+    googleApiOrigin?: string;
   }) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.refreshToken = refreshToken;
+    this.apiOrigin = apiOrigin;
+    this.googleApiOrigin = googleApiOrigin;
   }
 
   async getItem(
@@ -83,7 +95,7 @@ export class CWSClient {
   ): Promise<T> {
     await this.getAccessToken();
 
-    const url = `${ORIGIN}${path}`;
+    const url = `${this.apiOrigin}${path}`;
     const headers: Record<string, string> = {
       Authorization: `Bearer ${this.accessToken}`,
       "x-goog-api-version": "2",
@@ -106,10 +118,13 @@ export class CWSClient {
       return;
     }
 
-    const oauth2Client = new google.auth.OAuth2(
-      this.clientId,
-      this.clientSecret,
-    );
+    const oauth2Client = new google.auth.OAuth2({
+      clientId: this.clientId,
+      clientSecret: this.clientSecret,
+      endpoints: {
+        oauth2TokenUrl: `${this.googleApiOrigin}/token`,
+      },
+    });
     oauth2Client.setCredentials({ refresh_token: this.refreshToken });
 
     const { credentials } = await oauth2Client.refreshAccessToken();

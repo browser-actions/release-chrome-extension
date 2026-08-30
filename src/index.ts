@@ -9,7 +9,16 @@ async function run(): Promise<void> {
   const extensionId = core.getInput("extension-id");
   const extensionPath = core.getInput("extension-path");
 
-  const c = new CWSClient({ clientId, clientSecret, refreshToken });
+  const c = new CWSClient({
+    clientId,
+    clientSecret,
+    refreshToken,
+    // Overridable via env vars (not action inputs) so e2e tests can point
+    // the client at a local mock server instead of the real Chrome Web
+    // Store API / Google OAuth2 token endpoint. Unset in normal use.
+    apiOrigin: process.env.CWS_API_ORIGIN,
+    googleApiOrigin: process.env.GOOGLE_API_ORIGIN,
+  });
 
   const zip = await fs.openAsBlob(extensionPath);
   const uploadResult = await c.updateItem(extensionId, zip);
