@@ -18,6 +18,20 @@ function sendJson(res, status, body) {
   res.end(json);
 }
 
+// Matches an exact `${prefix}<id>${suffix}` path, where <id> is a single
+// non-empty path segment (no further slashes). Returns the extracted id, or
+// null if the path doesn't match exactly.
+function matchPath(pathname, prefix, suffix = "") {
+  if (!pathname.startsWith(prefix) || !pathname.endsWith(suffix)) {
+    return null;
+  }
+  const id = pathname.slice(prefix.length, pathname.length - suffix.length);
+  if (id.length === 0 || id.includes("/")) {
+    return null;
+  }
+  return id;
+}
+
 const server = http.createServer((req, res) => {
   const url = new URL(req.url ?? "/", `http://${req.headers.host}`);
   console.log(`[mock-server] ${req.method} ${url.pathname}`);
@@ -37,28 +51,29 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  const uploadMatch = url.pathname.match(
-    /^\/upload\/chromewebstore\/v1\.1\/items\/(.+)$/,
+  const uploadId = matchPath(
+    url.pathname,
+    "/upload/chromewebstore/v1.1/items/",
   );
-  if (req.method === "PUT" && uploadMatch) {
-    const [, id] = uploadMatch;
+  if (req.method === "PUT" && uploadId) {
     sendJson(res, 200, {
       kind: "chromewebstore#item",
-      id,
+      id: uploadId,
       publicKey: "mock-public-key",
       uploadState: "SUCCESS",
     });
     return;
   }
 
-  const publishMatch = url.pathname.match(
-    /^\/chromewebstore\/v1\.1\/items\/(.+)\/publish$/,
+  const publishId = matchPath(
+    url.pathname,
+    "/chromewebstore/v1.1/items/",
+    "/publish",
   );
-  if (req.method === "POST" && publishMatch) {
-    const [, id] = publishMatch;
+  if (req.method === "POST" && publishId) {
     sendJson(res, 200, {
       kind: "chromewebstore#item",
-      item_id: id,
+      item_id: publishId,
       status: ["OK"],
       statusDetail: [],
     });
