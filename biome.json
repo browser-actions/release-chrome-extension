@@ -1,11 +1,11 @@
 {
   "files": {
-    "ignore": ["./dist/", "package.json"]
+    "includes": ["**", "!dist/", "!**/package.json"]
   },
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "preset": "recommended"
     }
   },
   "formatter": {
