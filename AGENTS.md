@@ -38,7 +38,7 @@ The action flow is:
 2. Use `cws.ts` to upload the new extension zip to the Web Store draft.
 3. Publish the uploaded version.
 
-`cws.ts` wraps the Google APIs client (`googleapis`) for the Chrome Web Store. OAuth2 tokens are constructed from the provided client ID, client secret, and refresh token.
+`cws.ts` calls the Chrome Web Store API using `fetch` and authenticates with `OAuth2Client` from `google-auth-library`. OAuth2 tokens are constructed from the provided client ID, client secret, and refresh token.
 
 ### Getting OAuth2 credentials locally
 

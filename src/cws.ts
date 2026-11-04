@@ -1,4 +1,4 @@
-import { google } from "googleapis";
+import { OAuth2Client } from "google-auth-library";
 
 type UploadState = "FAILURE" | "IN_PROGRESS" | "NOT_FOUND" | "SUCCESS";
 
@@ -106,10 +106,7 @@ export class CWSClient {
       return;
     }
 
-    const oauth2Client = new google.auth.OAuth2(
-      this.clientId,
-      this.clientSecret,
-    );
+    const oauth2Client = new OAuth2Client(this.clientId, this.clientSecret);
     oauth2Client.setCredentials({ refresh_token: this.refreshToken });
 
     const { credentials } = await oauth2Client.refreshAccessToken();
