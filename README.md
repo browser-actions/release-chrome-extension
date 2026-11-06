@@ -36,6 +36,10 @@ All supported outputs are the following:
 | `oauth-client-secret` | The OAuth2 client secret.           | Yes      |
 | `oauth-refresh-token` | The OAuth2 refresh token.           | Yes      |
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, workflow, and release process.
+
 ## License
 
 [MIT](LICENSE)
