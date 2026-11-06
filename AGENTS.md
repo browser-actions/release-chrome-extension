@@ -38,7 +38,7 @@ The action flow is:
 2. Use `cws.ts` to upload the new extension zip to the Web Store draft.
 3. Publish the uploaded version.
 
-`cws.ts` wraps the Google APIs client (`googleapis`) for the Chrome Web Store. OAuth2 tokens are constructed from the provided client ID, client secret, and refresh token.
+`cws.ts` calls the Chrome Web Store API using `fetch` and authenticates with `OAuth2Client` from `google-auth-library`. OAuth2 tokens are constructed from the provided client ID, client secret, and refresh token.
 
 ### Getting OAuth2 credentials locally
 
@@ -60,3 +60,9 @@ Then follow the printed instructions in your browser.
 - **Never commit `dist/`** — it is built by CI and deployed to the `latest` branch on release.
 - **Never commit OAuth2 credentials** — always use GitHub Actions secrets.
 - The `action.yml` `main` field points to `index.js` inside `dist/`, not the TypeScript source.
+
+## GitHub Actions lockfile
+
+Workflow dependencies are tracked in `.github/workflows/actions.lock`. After changing any workflow action reference, run `gh actions-lock` and commit the updated workflows and lockfile together. Install the CLI extension with `gh extension install github/gh-actions-lock --pin v0.4.1` if needed.
+
+Run `gh actions-lock --verify-local` for an offline coverage check and `gh actions-lock --verify` to verify upstream references.

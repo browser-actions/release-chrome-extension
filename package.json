@@ -7,15 +7,15 @@
   "author": "Shin'ya Ueoka <ueokande@i-beam.org>",
   "license": "MIT",
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "@types/node": "^20.3.0",
-    "open": "^9.1.0"
+    "@biomejs/biome": "^2.6.4",
+    "@types/node": "^26.6.6",
+    "open": "^11.0.4"
   },
   "dependencies": {
-    "@actions/core": "^1.10.0",
-    "@vercel/ncc": "^0.36.1",
-    "googleapis": "^120.0.0",
-    "typescript": "^5.0.4"
+    "@actions/core": "^3.0.1",
+    "@vercel/ncc": "^0.45.0",
+    "google-auth-library": "^11.3.3",
+    "typescript": "^6.0.3"
   },
   "scripts": {
     "build": "ncc build src/index.ts",
@@ -25,5 +25,11 @@
   },
   "engines": {
     "node": ">=24.0.0"
+  },
+  "packageManager": "pnpm@10.34.9",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@biomejs/biome"
+    ]
   }
 }
